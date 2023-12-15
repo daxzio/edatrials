@@ -1,0 +1,6 @@
+*.vvp
+*.vcd
+testbench_verilator
+testbench_verilator_dir/
+synth.log
+synth.v
