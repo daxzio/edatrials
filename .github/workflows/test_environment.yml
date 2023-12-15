@@ -67,9 +67,9 @@ jobs:
   build_yosys:
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v3
-        - uses: YosysHQ/setup-oss-cad-suite@v2
-          with:
-            github-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v3
+      - uses: YosysHQ/setup-oss-cad-suite@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Report YOSYS
         run: yosys --version
