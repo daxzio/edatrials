@@ -49,8 +49,8 @@ jobs:
           git clone ${{ env.GITPATH }}
           cd verilator
           git checkout ${{ env.GITHEAD }}
-          sudo apt install -y build-essential flex bison ccache
           sudo apt install -y zlibc zlib1g zlib1g-dev  # Ubuntu only (ignore if gives error)
+          sudo apt install -y build-essential flex bison ccache
           sudo apt install -y numactl perl-doc
           sudo apt install -y libfl2  # Ubuntu only (ignore if gives error)
           sudo apt install -y libfl-dev  # Ubuntu only (ignore if gives error)
