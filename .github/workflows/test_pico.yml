@@ -109,7 +109,7 @@ jobs:
           which verilator
           yosys --version
           verilator --version
-          iverilog -v
+          #iverilog -v
       - name: Run all tests
         run: |
           make test
