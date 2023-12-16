@@ -1,7 +1,3 @@
-job:
-  tags:
-    - eda
-
 # before_script:
 #   - echo "Before script section"
 #   - echo "For example you might run an update here or install a build dependency"
@@ -12,6 +8,8 @@ job:
 #   - echo "For example you might do some cleanup here"
 
 build1:
+  tags:
+    - eda
   stage: build
   script:
     - echo "Do your build here"
