@@ -27,6 +27,9 @@ jobs:
       - name: Report Icarus
         run: |
           which iverilog
+          iverilog --version
+      - name: Run icarus tests
+        run: |
           make test
           make test_axi
 
@@ -65,6 +68,9 @@ jobs:
       - name: Report Verilator
         run: |
           which verilator
+          verilator --version
+      - name: Run Verilator tests
+        run: |
           make test_verilator
 
   build_yosys:
@@ -76,5 +82,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Report YOSYS
         run: |
+          which yosys
+          which icarus
           yosys --version
+      - name: Run yosys tests
+        run: |
           make test_synth
