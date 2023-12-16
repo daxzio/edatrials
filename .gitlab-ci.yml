@@ -15,8 +15,9 @@ build1:
     - echo "Do your build here"
     - pwd
     - ls
-#    - which iverilog
-    - /cadtools/linux-ubuntu22.04-skylake/spack/opt/spack/linux-ubuntu22.04-skylake/gcc-12.3.0/verilator/5.018/bin/verilator --version
+    - source /tmp/oss-cad-suite/environment
+    - which iverilog
+    - make test
 
 # test1:
 #   stage: test
