@@ -94,3 +94,25 @@ jobs:
       - name: Run yosys tests
         run: |
           make test_synth
+
+  run_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: YosysHQ/setup-oss-cad-suite@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Report YOSYS
+        run: |
+          which yosys
+          which iverilog
+          which verilator
+          yosys --version
+          verilator --version
+          iverilog -v
+      - name: Run all tests
+        run: |
+          make test
+          make test_axi
+          make test_verilator
+          make test_synth
