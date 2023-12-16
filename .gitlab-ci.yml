@@ -18,6 +18,9 @@ build1:
     - source /tmp/oss-cad-suite/environment
     - which iverilog
     - make test
+    - make test_axi
+    - make test_verilator
+    - make test_synth
 
 # test1:
 #   stage: test
