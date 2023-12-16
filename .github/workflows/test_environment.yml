@@ -49,7 +49,7 @@ jobs:
   build_verilator:
     uses: ./.github/workflows/setup_verilator.yml
   check_verilator:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: build_verilator
     steps:
       - name: Cache Verilator
