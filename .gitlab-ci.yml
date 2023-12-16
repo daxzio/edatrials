@@ -7,6 +7,9 @@
 # after_script:
 #   - echo "After script section"
 #   - echo "For example you might do some cleanup here"
+job:
+  tags:
+    - eda
 
 build1:
   stage: build
