@@ -16,7 +16,7 @@ build1:
     - echo "Do your build here"
     - pwd
     - ls
-    - source /tmp/oss-cad-suite/environment
+    - source /projects/oss-cad-suite/environment
     - which iverilog
     - make test
     - make test_axi
