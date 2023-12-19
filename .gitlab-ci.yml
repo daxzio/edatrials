@@ -10,7 +10,7 @@
 build1:
   tags: 
     - eda
-    - docker 
+    - docker
   stage: build
   script:
     - echo "Do your build here"
