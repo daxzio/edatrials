@@ -14,8 +14,8 @@ build1:
   stage: build
   script:
 #     - cat generated-bash-script | /bin/bash
-    - echo "Do your build here"
-    - apt-get update && apt-get install -y make
+#     - echo "Do your build here"
+#     - apt-get update && apt-get install -y make
     - pwd
     - ls
     - ls /
@@ -25,6 +25,7 @@ build1:
 #     - /bin/bash
     - source /projects/oss-cad-suite/environment
     - which iverilog
+    - which make
     - make test
     - make test_axi
     - make test_verilator
