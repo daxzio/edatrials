@@ -13,14 +13,15 @@ build1:
     - docker
   stage: build
   script:
-    - cat generated-bash-script | /bin/bash
+#     - cat generated-bash-script | /bin/bash
     - echo "Do your build here"
     - pwd
     - ls
     - ls /
 #     - ls /etc/gitlab-runner
     - ls /projects
-    - . /projects/oss-cad-suite/environment
+    - chmod +x /projects/oss-cad-suite/environment
+    - source /projects/oss-cad-suite/environment
     - which iverilog
     - make test
     - make test_axi
