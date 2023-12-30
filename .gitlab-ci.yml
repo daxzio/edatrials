@@ -15,7 +15,7 @@ build1:
   script:
 #     - cat generated-bash-script | /bin/bash
     - echo "Do your build here"
-    - sudo apt-get update && sudo apt-get install -y make
+    - apt-get update && apt-get install -y make
     - pwd
     - ls
     - ls /
