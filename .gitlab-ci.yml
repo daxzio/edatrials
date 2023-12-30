@@ -21,8 +21,8 @@ build1:
 #     - ls /etc/gitlab-runner
     - ls /projects
 #     - chmod +x /projects/oss-cad-suite/environment
-    - /bin/bash
-    - source /projects/oss-cad-suite/environment | /bin/bash
+#     - /bin/bash
+    - source /projects/oss-cad-suite/environment
     - which iverilog
     - make test
     - make test_axi
