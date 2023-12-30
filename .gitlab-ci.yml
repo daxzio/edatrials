@@ -17,6 +17,7 @@ build1:
     - pwd
     - ls
     - ls /
+    - ls /etc/gitlab-runner
     - ls /projects
     - source /projects/oss-cad-suite/environment
     - which iverilog
