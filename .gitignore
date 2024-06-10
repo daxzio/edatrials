@@ -4,3 +4,6 @@ testbench_verilator
 testbench_verilator_dir/
 synth.log
 synth.v
+downloads/
+vivado*
+oss-cad-suite/

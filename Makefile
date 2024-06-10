@@ -2,6 +2,22 @@ VERILATOR = verilator
 IVERILOG = iverilog$(ICARUS_SUFFIX)
 VVP = vvp$(ICARUS_SUFFIX)
 COMPRESSED_ISA = C
+OSS_RELEASE?=2024-06-08
+OSS_DIR?=./oss-cad-suite/${OSS_RELEASE}
+# SHELL := /usr/bin/bash
+
+${OSS_DIR}:
+	mkdir -p ${OSS_DIR}
+	wget -c -P downloads https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2024-06-08/oss-cad-suite-linux-x64-20240608.tgz
+	tar -zxvf downloads/oss-cad-suite-linux-x64-20240608.tgz -C ${OSS_DIR}
+	mv ${OSS_DIR}/oss-cad-suite/* ${OSS_DIR}/.
+	rmdir ${OSS_DIR}/oss-cad-suite
+
+setup: ${OSS_DIR}
+# 	source ${OSS_DIR}/environment
+	iverilog -v
+
+# 	curl -s https://api.github.com/reposYosysHQ/oss-cad-suite-build/releases/latest | grep browser_download_url | cut -d '"' -f 4
 
 test: testbench.vvp firmware/firmware.hex
 	$(VVP) -N $<
@@ -40,7 +56,11 @@ firmware/firmware.hex:
 # 	$(TOOLCHAIN_PREFIX)objcopy -O binary $< $@
 # 	chmod -x $@
 # 
-
+lint:
+	verible-verilog-lint  \
+		--rules -always-comb,-no-trailing-spaces,-line-length,-unpacked-dimensions-range-ordering,-parameter-name-style,-enum-name-style,-generate-label,-macro-name-style \
+		blockmem_2p.sv
+        
 clean:
 	rm -rf *.vvp testbench_verilator* synth.* *.vcd
 
