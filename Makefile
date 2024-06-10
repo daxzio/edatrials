@@ -2,7 +2,7 @@ VERILATOR = verilator
 IVERILOG = iverilog$(ICARUS_SUFFIX)
 VVP = vvp$(ICARUS_SUFFIX)
 COMPRESSED_ISA = C
-OSS_RELEASE?=2024-06-08
+OSS_RELEASE?=2024-06-10
 OSS_DIR?=./oss-cad-suite/${OSS_RELEASE}
 # SHELL := /usr/bin/bash
 
@@ -12,10 +12,12 @@ ${OSS_DIR}:
 	tar -zxvf downloads/oss-cad-suite-linux-x64-20240608.tgz -C ${OSS_DIR}
 	mv ${OSS_DIR}/oss-cad-suite/* ${OSS_DIR}/.
 	rmdir ${OSS_DIR}/oss-cad-suite
+	rm -rf ./oss-cad-suite/release
+	cd ./oss-cad-suite ; ln -s ${OSS_RELEASE} release
 
 setup: ${OSS_DIR}
-# 	source ${OSS_DIR}/environment
-	iverilog -v
+	@echo "source ./oss-cad-suite/release/environment"
+#     iverilog -v
 
 # 	curl -s https://api.github.com/reposYosysHQ/oss-cad-suite-build/releases/latest | grep browser_download_url | cut -d '"' -f 4
 
