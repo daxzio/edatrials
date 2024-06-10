@@ -7,7 +7,7 @@ build1:
 #     - pwd
 #     - ls
 #     - ls /
-#     - ls /projects
+#     - ls /projects 
     - source /projects/oss-cad-suite/release/environment
     - unset VERILATOR_ROOT
     - which iverilog
