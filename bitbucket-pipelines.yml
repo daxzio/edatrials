@@ -28,3 +28,13 @@ pipelines:
             - 'linux.shell'
           script:
             - echo "This step will run on a linux shell runner.";
+            - pwd
+            - ls
+            - ls /
+            - ls /projects 
+            - source /projects/oss-cad-suite/release/environment
+            - unset VERILATOR_ROOT
+            - which iverilog
+            - make test
+            - make test_axi
+            - make test_verilator
