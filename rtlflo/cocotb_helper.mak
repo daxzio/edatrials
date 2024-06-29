@@ -46,13 +46,13 @@ endif
 # Process defines
 ifeq ($(TOPLEVEL_LANG),verilog)
 	ifeq ($(SIM), icarus)
-	    COMPILE_ARGS += $(addprefix -D , $(DEFINES))
+	    COMPILE_ARGS += $(addprefix -D,$(DEFINES))
 	else ifneq ($(filter $(SIM),questa modelsim riviera activehdl),)
 	    #SIM_ARGS += $(addprefix -g, $(GENERICS))
 	else ifeq ($(SIM),vcs)
 	    #COMPILE_ARGS += $(addprefix -pvalue+/, $(GENERICS))
 	else ifeq ($(SIM),verilator)
-	    #COMPILE_ARGS += $(addprefix -G, $(GENERICS))
+	    COMPILE_ARGS += $(addprefix -D,$(DEFINES))
 	else ifneq ($(filter $(SIM),ius xcelium),)
 	    EXTRA_ARGS += $(addprefix -define , $(DEFINES))
 	endif

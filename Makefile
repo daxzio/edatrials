@@ -2,14 +2,19 @@ VERILATOR = verilator
 IVERILOG = iverilog$(ICARUS_SUFFIX)
 VVP = vvp$(ICARUS_SUFFIX)
 COMPRESSED_ISA = C
-OSS_RELEASE?=2024-06-10
+OSS_RELEASE?=2024-06-29
+YY=$(subst -,,$(OSS_RELEASE))
 OSS_DIR?=./oss-cad-suite/${OSS_RELEASE}
 # SHELL := /usr/bin/bash
 
-${OSS_DIR}:
+xx:
+	echo ${OSS_RELEASE}
+	echo ${YY}
+    
+${OSS_DIR}: xx
 	mkdir -p ${OSS_DIR}
-	wget -c -P downloads https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2024-06-08/oss-cad-suite-linux-x64-20240608.tgz
-	tar -zxvf downloads/oss-cad-suite-linux-x64-20240608.tgz -C ${OSS_DIR}
+	wget -c -P downloads https://github.com/YosysHQ/oss-cad-suite-build/releases/download/${OSS_RELEASE}/oss-cad-suite-linux-x64-${YY}.tgz
+	tar -zxvf downloads/oss-cad-suite-linux-x64-${YY}.tgz -C ${OSS_DIR}
 	mv ${OSS_DIR}/oss-cad-suite/* ${OSS_DIR}/.
 	rmdir ${OSS_DIR}/oss-cad-suite
 	rm -rf ./oss-cad-suite/release
