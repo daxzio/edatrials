@@ -50,6 +50,18 @@ testbench_verilator: testbench.v picorv32.v testbench.cc
 synth.v: picorv32.v scripts/yosys/synth_sim.ys
 	yosys -qv3 -l synth.log scripts/yosys/synth_sim.ys
 
+test_synth_yosys: testbench.v  synth_yosys.v
+	$(IVERILOG) -o testbench_synth_yosys.vvp -DSYNTH_TEST $^
+	chmod -x testbench_synth_yosys.vvp
+	vvp -N testbench_synth_yosys.vvp
+
+test_synth_verilator: testbench.v  synth_yosys.v
+	$(VERILATOR) --cc --exe -Wno-lint -trace -DSYNTH_TEST --top-module picorv32_wrapper $^ \
+			--Mdir testbench_verilator_yosys_dir 
+	$(MAKE) -C testbench_verilator_yosys_dir -f Vpicorv32_wrapper.mk
+# 	cp testbench_verilator_yosys_dir/Vpicorv32_wrapper testbench_verilator_yosys
+#     ./testbench_verilator_yosys
+
 firmware/firmware.hex: 
 # firmware/firmware.hex: firmware/firmware.bin firmware/makehex.py
 # 	$(PYTHON) firmware/makehex.py $< 32768 > $@
@@ -64,6 +76,6 @@ lint:
 		blockmem_2p.sv
         
 clean:
-	rm -rf *.vvp testbench_verilator* synth.* *.vcd
+	rm -rf *.vvp testbench_verilator* synth.* *.vcd vivado*
 
 .PHONY: test test_axi test_synth clean
