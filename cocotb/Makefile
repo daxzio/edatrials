@@ -1,6 +1,6 @@
 SIM?=icarus
 TOPLEVEL_LANG=verilog
-WORK_BASE?=../..
+WORK_BASE?=..
 #XILINX_BASE=${HOME}/projects/XilinxUnisimLibrary
 #XILINX_BASE=/cadtools/ubuntu_x86/xilinx/Vivado/2021.2/data
 PROJ_HOME?=..
@@ -9,6 +9,7 @@ RTLFLOW_PATH?=../rtlflo
 TOPLEVEL = dut
 MODULE = test_${TOPLEVEL}
 
+# USE_CDS=true
 # XILINX_PART?=xc7k325tffg900-2
 # XILINX_REV?=2021.2
 # ifneq (,$(wildcard ./makefile_synth.mak))

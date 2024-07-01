@@ -10,3 +10,4 @@ oss-cad-suite
 __pycache__/
 results.xml
 sim_build/
+xrun*

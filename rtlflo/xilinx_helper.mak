@@ -17,6 +17,19 @@ CADENCE_VLOG?=ncvlog
 CADENCE_VHDL?=ncvhdl
 endif
 
+ifneq (${USE_CDS},)
+    ifeq ($(SIM),xcelium)
+		COMPILE_ARGS += -cdslib ${CDSLIB}
+	else ifeq ($(SIM),ius)
+		COMPILE_ARGS += -cdslib ${CDSLIB}
+    else ifeq ($(SIM),verilator)
+# 	    COMPILE_ARGS += --top-module glbl
+# 		VERILOG_SOURCES += \
+# 			${XILINX_BASE}/verilog/src/glbl.v
+# 	    VERILOG_SOURCES += ${UNISIMS} 
+    endif
+endif
+
 ifneq (${XILINX_BASE},)
 	UNISIMS_VER_CNT=`grep -s unisims_ver ${CDSLIB} | wc -l`
 	UNISIMS_VHDL_CNT=`grep -s unisim ${CDSLIB} | wc -l`
@@ -46,12 +59,10 @@ ifneq (${XILINX_BASE},)
 			COMPILE_ARGS += -s glbl
 		endif
 	else ifeq ($(SIM),xcelium)
-		COMPILE_ARGS += -cdslib ${CDSLIB}
 		COMPILE_ARGS += -top glbl
 		VERILOG_SOURCES += \
 			${XILINX_BASE}/verilog/src/glbl.v
 	else ifeq ($(SIM),ius)
-		COMPILE_ARGS += -cdslib ${CDSLIB}
         ifneq (${VERILOG_SOURCES},)
 		    COMPILE_ARGS += -top glbl
 		    VERILOG_SOURCES += \

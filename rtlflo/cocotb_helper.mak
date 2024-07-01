@@ -56,6 +56,7 @@ ifeq ($(TOPLEVEL_LANG),verilog)
 		DEFINES += COCOTB_VERILATOR=1
 	    COMPILE_ARGS += $(addprefix -D,$(DEFINES))
 	else ifneq ($(filter $(SIM),ius xcelium),)
+		DEFINES += COCOTB_CADENCE=1
 	    EXTRA_ARGS += $(addprefix -define , $(DEFINES))
 	endif
 else ifeq ($(TOPLEVEL_LANG),vhdl)
@@ -79,9 +80,7 @@ ifeq ($(TOPLEVEL_LANG),verilog)
 	else ifeq ($(SIM),xcelium)
 		COMPILE_ARGS += -disable_sem2009
 		COMPILE_ARGS += -sv
-		COMPILE_ARGS += -top ${TOPLEVEL}
 	else ifeq ($(SIM),verilator)
-# 	    COMPILE_ARGS += -DCOCOTB_VERILATOR=1
 		COMPILE_ARGS += --no-timing -Wno-WIDTHEXPAND -Wno-WIDTHTRUNC -Wno-STMTDLY  -Wno-lint
 		EXTRA_ARGS += --trace-fst --trace-structs
 		#SIM_ARGS += --trace 
