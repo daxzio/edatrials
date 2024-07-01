@@ -8,6 +8,9 @@ downloads/
 vivado*
 oss-cad-suite
 __pycache__/
+repos/
+
+# cadence
 results.xml
 sim_build/
 xrun*

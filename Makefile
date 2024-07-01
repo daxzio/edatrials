@@ -48,7 +48,7 @@ testbench_synth.vvp: testbench.v synth.v
 
 testbench_verilator: testbench.v picorv32.v testbench.cc
 	$(VERILATOR) --cc --exe -Wno-lint -trace --top-module picorv32_wrapper testbench.v picorv32.v testbench.cc \
-			$(subst C,-DCOMPRESSED_ISA,$(COMPRESSED_ISA)) --Mdir testbench_verilator_dir
+			$(subst C,-DCOMPRESSED_ISA,$(COMPRESSED_ ISA)) --Mdir testbench_verilator_dir
 	$(MAKE) -C testbench_verilator_dir -f Vpicorv32_wrapper.mk
 	cp testbench_verilator_dir/Vpicorv32_wrapper testbench_verilator
 
@@ -82,12 +82,6 @@ test_cadence: testbench.v picorv32.v
 		-disable_sem2009 -sv  -licqueue -64 -xmlibdirpath sim_build -plinowarn -top testbench  -define COMPRESSED_ISA -define COCOTB_CADENCE=1 \
 		-access +rwc -createdebugdb $^
 
-test_vcs: testbench.v picorv32.v
-	rm -rf simv.daidir/.vcs.timestamp
-	vcs +nowarnTFIPC +nowarnSV-SVPIA +nowarnSDFCOM_SWC -sverilog -full64 -v2005 -debug_access+all +vpd_dump \
-	-v $^
-	./simv +vpd_dump 
-
 firmware/firmware.hex: 
 # firmware/firmware.hex: firmware/firmware.bin firmware/makehex.py
 # 	$(PYTHON) firmware/makehex.py $< 32768 > $@
@@ -102,6 +96,12 @@ lint:
 		blockmem_2p.sv
         
 clean:
-	rm -rf *.vvp testbench_verilator* synth.* *.vcd vivado* sim_build* simv.daidir/ ucli.key csrc/ ucli.key simv DVEfiles/
+	rm -rf *.vvp testbench_verilator* synth.* *.vcd vivado* sim_build*
+
+git_align:
+	mkdir -p repos
+	cd repos ; git clone git@github.com:daxzio/rtlflo.git 2> /dev/null || (cd rtlflo ; git pull)
+	rsync -artu --exclude .git repos/rtlflo/ rtlflo
+	rsync -artu --exclude .git rtlflo/ repos/rtlflo
 
 .PHONY: test test_axi test_synth clean
