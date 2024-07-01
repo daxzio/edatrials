@@ -51,7 +51,8 @@ ifeq ($(TOPLEVEL_LANG),verilog)
 	else ifneq ($(filter $(SIM),questa modelsim riviera activehdl),)
 	    #SIM_ARGS += $(addprefix -g, $(GENERICS))
 	else ifeq ($(SIM),vcs)
-	    #COMPILE_ARGS += $(addprefix -pvalue+/, $(GENERICS))
+		DEFINES += COCOTB_SYNOPSYS=1
+	    COMPILE_ARGS += $(addprefix +define+,$(DEFINES))
 	else ifeq ($(SIM),verilator)
 		DEFINES += COCOTB_VERILATOR=1
 	    COMPILE_ARGS += $(addprefix -D,$(DEFINES))
@@ -84,6 +85,10 @@ ifeq ($(TOPLEVEL_LANG),verilog)
 		COMPILE_ARGS += --no-timing -Wno-WIDTHEXPAND -Wno-WIDTHTRUNC -Wno-STMTDLY  -Wno-lint
 		EXTRA_ARGS += --trace-fst --trace-structs
 		#SIM_ARGS += --trace 
+	else ifeq ($(SIM),vcs)
+# 		COMPILE_ARGS += -debug_access+r+w+nomemcbk -debug_region+cell
+		COMPILE_ARGS += -kdb
+		SIM_ARGS += -kdb
 	endif
 endif
 
@@ -102,8 +107,13 @@ else ifeq ($(SIM), ius)
 	simvision -waves waves.shm &
 else ifeq ($(SIM),verilator)
 	gtkwave dump.fst &
+else ifeq ($(SIM),vcs)
+	verdi &
 endif
 
 clean::
-	rm -rf __pycache__/ .simvision/ .Xil/ results.xml *.trn *.dsn vivado* *.vcd *.out irun* simvision* xrun* .bpad/ waves.shm/ *.err INCA_libs/ *.fst ncvlog.log
+	rm -rf __pycache__/ .simvision/ .Xil/ results.xml *.trn *.dsn vivado* *.vcd \
+	*.out irun* simvision* xrun* .bpad/ waves.shm/ *.err INCA_libs/ *.fst ncvlog.log \
+    DVEfiles/ inter.fsdb* .inter.fsdb* novas.conf novas.rc novas_dump.log verdiLog/
+
 

@@ -12,3 +12,11 @@ results.xml
 sim_build/
 xrun*
 irun*
+
+# vcs
+simv.daidir/ 
+ucli.key 
+csrc/ 
+ucli.key
+simv
+DVEfiles/

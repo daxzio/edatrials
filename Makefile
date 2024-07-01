@@ -82,6 +82,12 @@ test_cadence: testbench.v picorv32.v
 		-disable_sem2009 -sv  -licqueue -64 -xmlibdirpath sim_build -plinowarn -top testbench  -define COMPRESSED_ISA -define COCOTB_CADENCE=1 \
 		-access +rwc -createdebugdb $^
 
+test_vcs: testbench.v picorv32.v
+	rm -rf simv.daidir/.vcs.timestamp
+	vcs +nowarnTFIPC +nowarnSV-SVPIA +nowarnSDFCOM_SWC -sverilog -full64 -v2005 -debug_access+all +vpd_dump \
+	-v $^
+	./simv +vpd_dump 
+
 firmware/firmware.hex: 
 # firmware/firmware.hex: firmware/firmware.bin firmware/makehex.py
 # 	$(PYTHON) firmware/makehex.py $< 32768 > $@
@@ -96,6 +102,6 @@ lint:
 		blockmem_2p.sv
         
 clean:
-	rm -rf *.vvp testbench_verilator* synth.* *.vcd vivado* sim_build*
+	rm -rf *.vvp testbench_verilator* synth.* *.vcd vivado* sim_build* simv.daidir/ ucli.key csrc/ ucli.key simv DVEfiles/
 
 .PHONY: test test_axi test_synth clean

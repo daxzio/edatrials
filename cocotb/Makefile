@@ -3,7 +3,7 @@ TOPLEVEL_LANG=verilog
 WORK_BASE?=..
 #XILINX_BASE=${HOME}/projects/XilinxUnisimLibrary
 #XILINX_BASE=/cadtools/ubuntu_x86/xilinx/Vivado/2021.2/data
-PROJ_HOME?=..
+PROJ_HOME?=$(shell readlink -f ..)
 RTLFLOW_PATH?=../rtlflo
 
 TOPLEVEL = dut
@@ -17,13 +17,13 @@ MODULE = test_${TOPLEVEL}
 # endif
 
 SIM_SOURCES += \
-	./testbench.v 
+	${PROJ_HOME}/cocotb/testbench.v 
 
 RTL_SOURCES += \
 	${PROJ_HOME}/picorv32.v
 
 COCOTB_SOURCES = \
-    ./dut.sv 
+    ${PROJ_HOME}/cocotb/dut.sv 
     
 # ifeq ($(SIM), verilator)
 # COCOTB_SOURCES += \
