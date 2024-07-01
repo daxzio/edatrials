@@ -46,12 +46,14 @@ endif
 # Process defines
 ifeq ($(TOPLEVEL_LANG),verilog)
 	ifeq ($(SIM), icarus)
+		DEFINES += COCOTB_ICARUS=1
 	    COMPILE_ARGS += $(addprefix -D,$(DEFINES))
 	else ifneq ($(filter $(SIM),questa modelsim riviera activehdl),)
 	    #SIM_ARGS += $(addprefix -g, $(GENERICS))
 	else ifeq ($(SIM),vcs)
 	    #COMPILE_ARGS += $(addprefix -pvalue+/, $(GENERICS))
 	else ifeq ($(SIM),verilator)
+		DEFINES += COCOTB_VERILATOR=1
 	    COMPILE_ARGS += $(addprefix -D,$(DEFINES))
 	else ifneq ($(filter $(SIM),ius xcelium),)
 	    EXTRA_ARGS += $(addprefix -define , $(DEFINES))
@@ -68,7 +70,7 @@ endif
 
 ifeq ($(TOPLEVEL_LANG),verilog)
 	ifeq ($(SIM), icarus)
-	    COMPILE_ARGS += -D COCOTB_ICARUS=1
+# 	    COMPILE_ARGS += -D COCOTB_ICARUS=1
 		WAVES=1
 	else ifeq ($(SIM), ius)
 		COMPILE_ARGS += -disable_sem2009
@@ -79,8 +81,8 @@ ifeq ($(TOPLEVEL_LANG),verilog)
 		COMPILE_ARGS += -sv
 		COMPILE_ARGS += -top ${TOPLEVEL}
 	else ifeq ($(SIM),verilator)
-	    COMPILE_ARGS += -DCOCOTB_VERILATOR=1
-		COMPILE_ARGS += --no-timing -Wno-WIDTHEXPAND -Wno-WIDTHTRUNC -Wno-STMTDLY
+# 	    COMPILE_ARGS += -DCOCOTB_VERILATOR=1
+		COMPILE_ARGS += --no-timing -Wno-WIDTHEXPAND -Wno-WIDTHTRUNC -Wno-STMTDLY  -Wno-lint
 		EXTRA_ARGS += --trace-fst --trace-structs
 		#SIM_ARGS += --trace 
 	endif

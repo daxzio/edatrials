@@ -1,12 +1,15 @@
-module dut (
+module dut #(
+	  integer AXI_TEST = 0
+	, integer VERBOSE = 0
+) (
 );
 
-
-    testbench #(
+    picorv32_wrapper #(
+          .AXI_TEST (AXI_TEST)
+        , .VERBOSE (VERBOSE)
     ) i_testbench (
     );
 
-    //`ifdef COCOTB_SIM
 `ifdef COCOTB_ICARUS
     initial begin
         $dumpfile("dut.vcd");
@@ -16,7 +19,6 @@ module dut (
         /* verilator lint_on STMTDLY */
     end
 `endif
-
 
 endmodule
 

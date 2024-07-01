@@ -16,13 +16,18 @@ MODULE = test_${TOPLEVEL}
 # endif
 
 SIM_SOURCES += \
-	${PROJ_HOME}/testbench.v 
+	./testbench.v 
 
 RTL_SOURCES += \
 	${PROJ_HOME}/picorv32.v
 
 COCOTB_SOURCES = \
-    ./dut.sv
+    ./dut.sv 
+    
+# ifeq ($(SIM), verilator)
+# COCOTB_SOURCES += \
+#     ../testbench.cc
+# endif
 
 VERILOG_DESIGN += ${XILINX_SIM_SOURCES} ${RTL_SOURCES} ${SIM_SOURCES} ${IMPORT_SOURCES}
 
@@ -32,5 +37,8 @@ VERILOG_SOURCES = \
 
 DEFINES = \
     COMPRESSED_ISA \
+
+# GENERICS = \
+# 	VERBOSE=1
 
 include ${RTLFLOW_PATH}/cocotb_helper.mak
