@@ -48,7 +48,7 @@ testbench_synth.vvp: testbench.v synth.v
 
 testbench_verilator: testbench.v picorv32.v testbench.cc
 	$(VERILATOR) --cc --exe -Wno-lint -trace --top-module picorv32_wrapper testbench.v picorv32.v testbench.cc \
-			$(subst C,-DCOMPRESSED_ISA,$(COMPRESSED_ISA)) --Mdir testbench_verilator_dir
+			$(subst C,-DCOMPRESSED_ISA,$(COMPRESSED_ ISA)) --Mdir testbench_verilator_dir
 	$(MAKE) -C testbench_verilator_dir -f Vpicorv32_wrapper.mk
 	cp testbench_verilator_dir/Vpicorv32_wrapper testbench_verilator
 
@@ -66,6 +66,21 @@ test_synth_verilator: testbench.v  synth_yosys.v
 	$(MAKE) -C testbench_verilator_yosys_dir -f Vpicorv32_wrapper.mk
 # 	cp testbench_verilator_yosys_dir/Vpicorv32_wrapper testbench_verilator_yosys
 #     ./testbench_verilator_yosys
+ 
+
+test_ius: testbench.v picorv32.v
+	mkdir -p sim_build
+	irun -timescale 1ns/1ps \
+		-disable_sem2009 -sv  -licqueue -64 -nclibdirpath sim_build -plinowarn -top testbench  \
+		-define COMPRESSED_ISA \
+		-define COCOTB_CADENCE=1 \
+		-access +rwc -createdebugdb  $^
+
+test_cadence: testbench.v picorv32.v
+	mkdir -p sim_build
+	xrun -timescale 1ns/1ps \
+		-disable_sem2009 -sv  -licqueue -64 -xmlibdirpath sim_build -plinowarn -top testbench  -define COMPRESSED_ISA -define COCOTB_CADENCE=1 \
+		-access +rwc -createdebugdb $^
 
 firmware/firmware.hex: 
 # firmware/firmware.hex: firmware/firmware.bin firmware/makehex.py
@@ -81,6 +96,6 @@ lint:
 		blockmem_2p.sv
         
 clean:
-	rm -rf *.vvp testbench_verilator* synth.* *.vcd vivado*
+	rm -rf *.vvp testbench_verilator* synth.* *.vcd vivado* sim_build*
 
 .PHONY: test test_axi test_synth clean
